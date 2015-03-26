@@ -11,7 +11,7 @@ CREATE TABLE _user
 CREATE TABLE _device
 (
   _key integer NOT NULL,
-  _user character(20),
+  _user character(20) NOT NULL,
   CONSTRAINT _device_pkey PRIMARY KEY (_key),
   CONSTRAINT _user FOREIGN KEY (_user)
       REFERENCES _user (_name) MATCH SIMPLE

@@ -33,4 +33,34 @@ function User(name){
     }
 }
 
+function Device(user, key){
+    this.user=user;
+    this.key=key;
+    this.insertDevice = function(fn){
+        pg.connect(conString, function(err, client, done) {
+
+            if(err) {
+                console.log(err);
+                done();
+                return fn(err);
+            }
+
+            client.query("INSERT INTO _device (_key, _user) VALUES($1, $2)", [user, key],
+                function(err)
+                {
+                    if(err) {
+                        console.log(err);
+                        done();
+                        return fn(err);
+                    }
+                    done();
+                    return fn(null);
+                }
+            );
+        });
+    }
+}
+
+
 module.exports.user = User;
+module.exports.device = Device;

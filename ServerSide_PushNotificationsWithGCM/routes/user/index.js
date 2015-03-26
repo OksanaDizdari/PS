@@ -10,7 +10,7 @@ var router = express.Router();
 module.exports = function(app) {
 
     router.get('/users', function (req, res) {
-        res.render('user', {title: 'XXXXXXX'});
+        //res.render('user', {title: 'XXXXXXX'});
     });
 
     router.post("/user", function(req, res){
