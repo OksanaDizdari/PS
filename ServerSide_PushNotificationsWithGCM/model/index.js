@@ -6,9 +6,8 @@ var pg = require('pg');
 var fs = require('fs');
 var conString = fs.readFileSync("config.properties").toString();
 
-function User(name,password){
+function User(name){
     this.name=name;
-    this.password=password;
     this.insertUser = function(fn){
         pg.connect(conString, function(err, client, done) {
 
@@ -18,7 +17,7 @@ function User(name,password){
                 return fn(err);
             }
 
-            client.query("INSERT INTO _user (_name, _password) VALUES($1,$2)", [name,password],
+            client.query("INSERT INTO _user (_name) VALUES($1)", [name],
                 function(err)
                 {
                     if(err) {

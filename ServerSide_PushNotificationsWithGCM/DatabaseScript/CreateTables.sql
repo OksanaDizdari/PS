@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS _user;
 CREATE TABLE _user
 (
   _name character varying(20) NOT NULL,
-  _password character varying(140) NOT NULL,
   CONSTRAINT _user_pkey PRIMARY KEY (_name)
 );
 
