@@ -14,7 +14,7 @@ module.exports = function(app) {
     });
 
     router.post("/user", function(req, res){
-        db.user = new db.user(req.body.name).insertUser(
+        db.user = new db.user(req.query.name, req.query.client).insertUser(
             function(err)
             {
                 if(err) {
