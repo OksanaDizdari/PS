@@ -46,11 +46,34 @@
     }
 
 
+    function updateClient(){
+
+        var name= document.getElementById('3').value;
+        var obj = JSON.stringify({user: name});
+
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.open("PUT", "/RTPushNotif/clients/test/users/joana", true);
+        xmlhttp.setRequestHeader("xhr", "XMLHttpRequest");
+        xmlhttp.setRequestHeader("Content-type", "application/json");
+
+        xmlhttp.onreadystatechange=function()
+        {
+            if (xmlhttp.readyState==4 && xmlhttp.status==200)
+            {
+                console.log(xmlhttp.response);
+            }
+        }
+        xmlhttp.send(obj);
+        return false;
+    }
+
+
 
 </script>
 
 <input id="1"><button onclick='insertClient()'>inserir cliente</button>
 <input id="2"><button onclick='deleteClient()'>eliminar cliente</button>
+<input id="3"><button onclick='updateClient()'>editar cliente</button>
 
 
 <% include _layouts/bottom %>

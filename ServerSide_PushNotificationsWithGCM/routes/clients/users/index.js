@@ -1,6 +1,6 @@
 
 var express = require('express');
-var db = require("./../../../model");
+var db = require("./../../../model/users");
 
 var router = express.Router();
 
@@ -23,18 +23,6 @@ module.exports = function(app) {
             else res.redirect("/users");
         },req.body.user, req.params.clientName,req.body.devices)
     });
-
-        /* new db.user(req.body.user, req.params.clientName).insertUser(
-                function(err)
-               {
-                    if(err){
-                        console.log("Error inserting an user!! " + err);
-                        res.status(500).type('text/html').send("SERVER ERROR");
-                    }
-                    else res.redirect("/users");
-                }
-           );
-        });*/
 
    //DELETE RTPushNotif/clients/:clientName/users
     router.delete("/:clientName/users", function(req, res){
@@ -62,31 +50,22 @@ module.exports = function(app) {
         );*/
     });
 
-
-   //  AINDA NAO ESTA TESTADO
    // PUT RTPushNotif/clients/:clientName/users/:id
     router.put("/:clientName/users/:id", function(req, res){
 
-        //verificar login ou enviar pass
-        db.UpdateUser(function(err)
-        {
-            if(err){
-                console.log("Error deleting an user!! " + err);
-                res.status(500).type('text/html').send("SERVER ERROR");
-            }
-            else res.redirect("/users");
-        },req.params.id, req.params.clientName,req.body.user,req.body.devicesID)
+        if(req.body.user == undefined && req.body.devicesID == undefined)
+            return;
 
-        /*  db.user = new db.user(req.body.user,req.params.clientName).deleteUser(
-         function(err)
-         {
-         if(err) {
-         console.log("Error inserting an user!! " + err);
-         res.status(500).type('text/html').send("SERVER ERROR");
-         }
-         else res.redirect("/users");
-         }
-         );*/
+            //verificar login ou enviar pass
+
+            db.UpdateUser(function (err) {
+                if (err) {
+                    console.log("Error updating an user!! " + err);
+                    res.status(500).type('text/html').send("SERVER ERROR");
+                }
+                else res.redirect("/users");
+            }, req.params.id, req.params.clientName, req.body.user, req.body.devicesID)
+
     });
 
     app.use("/RTPushNotif/clients", router);
