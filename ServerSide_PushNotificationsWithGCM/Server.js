@@ -28,9 +28,11 @@ app.use(cookieParser());
 // ROUTES
 // ==============================================
 // we'll create our routes here
-require('./routes/client')(app);
-require('./routes/user')(app);
-require('./routes/device')(app);
+
+require('./routes/')(app);
+require('./routes/clients')(app);
+require('./routes/clients/users')(app);
+require('./routes/clients/users/devices')(app);
 
 
 // ERROR
