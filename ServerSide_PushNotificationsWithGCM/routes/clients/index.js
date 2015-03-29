@@ -8,8 +8,19 @@ var db = require("./../../model");
 var router = express.Router();
 
 module.exports = function(app) {
+    router.post("/clients/regist", function(req, res){
 
 
+        db.Client.insertClient(req.body.clientName, req.body.password, function(err)
+        {
+            if(err)
+            {
+                console.log("Error inserting a Client!! " + err);
+                res.status(500).type('text/html').send("SERVER ERROR");
+            }
+            else res.redirect("/RTPushNotif");
+        });
+    });
 
-    app.use("/RTPushNotif/clients", router);
+    app.use("/RTPushNotif/api/v1", router);
 }

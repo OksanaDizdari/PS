@@ -26,5 +26,5 @@ CREATE TABLE _device
  _client character varying(120) NOT NULL,
   CONSTRAINT _device_pkey PRIMARY KEY (_key,_user,_client),
   CONSTRAINT _user FOREIGN KEY (_user, _client)
-  REFERENCES _user(_name, _client) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+  REFERENCES _user(_identifier, _client) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
 );

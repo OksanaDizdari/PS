@@ -6,7 +6,8 @@ var pg = require('pg');
 var fs = require('fs');
 var conString = fs.readFileSync("config.properties").toString();
 
-function Client(name, password){
+var Client = require("./clients");
+/*function Client(name, password){
     this.name=name;
     this.password=password;
     this.insertClient = function(fn){
@@ -87,6 +88,9 @@ function Device(user, key){
         });
     }
 }
+ */
 
-module.exports.client = Client;
-module.exports.device = Device;
+module.exports.pg = pg;
+module.exports.conString = conString;
+module.exports.Client = Client;
+//module.exports.device = Device;

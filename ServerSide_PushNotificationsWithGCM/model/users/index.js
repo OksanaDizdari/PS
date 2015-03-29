@@ -1,5 +1,3 @@
-
-
 var pg = require('pg');
 var fs = require('fs');
 var conString = fs.readFileSync("config.properties").toString();
@@ -124,74 +122,6 @@ function updateUser(fn,identifier,clientName,newIdentifier,newDevices){
         }*/
     });
 
-}
-
-function User(identifier, client){
-    this.identifier = identifier;
-    this.client = client;
-
-    this.insertUser = function(fn){
-        pg.connect(conString, function(err, client, done) {
-
-
-            console.log("OK... ATE AKI NADA")
-            if(err) {
-                console.log(err);
-                done();
-                return fn(err);
-            }
-
-            client.query("INSERT INTO _user (_identifier, _client) VALUES($1, $2)", [identifier, client],
-                function(err)
-                {
-                    if(err) {
-                        console.log(err);
-                        done();
-                        return fn(err);
-                    }
-                    done();
-                    return fn(null);
-                }
-            );
-        });
-    }
-
-    this.deleteUser = function(fn){
-        pg.connect(conString, function(err, client, done) {
-
-            if(err) {
-                console.log(err);
-                done();
-                return fn(err);
-            }
-
-            client.query("DELETE FROM _device WHERE _name=$1 ", [identifier],
-                function(err)
-                {
-                    if(err) {
-                        console.log(err);
-                        done();
-                        return fn(err);
-                    }
-                    done();
-                    return fn(null);
-                }
-            );
-
-            client.query("DELETE FROM _user WHERE _name=$1", [identifier],
-                function(err)
-                {
-                    if(err) {
-                        console.log(err);
-                        done();
-                        return fn(err);
-                    }
-                    done();
-                    return fn(null);
-                }
-            );
-        });
-    }
 }
 
 module.exports.InsertUser=insertUser;
