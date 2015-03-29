@@ -5,7 +5,7 @@
 
         var name= document.getElementById('2').value;
 
-        var parameters = "user="+name;
+        var parameters = "userID="+name;
 
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.open("DELETE", "/RTPushNotif/api/v1/clients/SIBS/users/Oksana", true);
@@ -27,7 +27,7 @@
     function updateUser(){
 
         var name= document.getElementById('3').value;
-        var obj = JSON.stringify({user: name});
+        var obj = JSON.stringify({userID: name});
 
         var xmlhttp=new XMLHttpRequest();
         xmlhttp.open("PUT", "/RTPushNotif/api/v1/clients/SIBS/users/Oksana", true);
@@ -48,6 +48,7 @@
 
 
 </script>
+
 <form action="/RTPushNotif/api/v1/clients/regist" method="post">
     <h2>Registar o Cliente</h2>
     <label>Client Name</label>

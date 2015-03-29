@@ -17,7 +17,7 @@ module.exports = function(app) {
     router.post("/:clientName/users", function(req, res){
      //verificar login ou enviar pass
 
-        db.User.insertUser(req.body.user, req.params.clientName, req.body.devices, function(err)
+        db.User.insertUser(req.body.userID, req.params.clientName, req.body.devicesID, function(err)
         {
             if(err){
                 console.log("Error inserting an user!! " + err);
@@ -45,7 +45,7 @@ module.exports = function(app) {
    // PUT RTPushNotif/clients/:clientName/users/:id
     router.put("/:clientName/users/:id", function(req, res){
 
-        if(req.body.user == undefined && req.body.devicesID == undefined)
+        if(req.body.userID == undefined && req.body.devicesID == undefined)
             return;
 
             //verificar login ou enviar pass
@@ -60,6 +60,6 @@ module.exports = function(app) {
                 })
 
     });
-
     app.use("/RTPushNotif/api/v1/clients", router);
+
 }

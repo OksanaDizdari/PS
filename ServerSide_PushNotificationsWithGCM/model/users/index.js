@@ -12,7 +12,6 @@ function insertUser(identifier, clientName, devices, fn){
             done();
             return fn(err);
         }
-
         client.query("INSERT INTO _user (_identifier, _client) VALUES($1, $2)", [identifier, clientName],
             function(err)
             {
@@ -25,12 +24,8 @@ function insertUser(identifier, clientName, devices, fn){
                 return fn(null);
             }
         );
-
         if(devices!=undefined && devices != null){
-            console.log(devices);
-
             for(var i =0; i<devices.length; i++) {
-                console.log(devices[i]);
                 client.query("INSERT INTO _device (_key,_user, _client) VALUES($1,$2,$3)", [devices[i], identifier, clientName],
                     function (err) {
                         if (err) {
