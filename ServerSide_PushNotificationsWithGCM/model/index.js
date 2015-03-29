@@ -1,5 +1,5 @@
 /**
- * Created by Oksana on 26/03/2015.
+ * Created by Beatriz and Oksana on 26/03/2015.
  */
 
 var pg = require('pg');
@@ -7,33 +7,7 @@ var fs = require('fs');
 var conString = fs.readFileSync("config.properties").toString();
 
 var Client = require("./clients");
-/*function Client(name, password){
-    this.name=name;
-    this.password=password;
-    this.insertClient = function(fn){
-        pg.connect(conString, function(err, client, done) {
-
-            if(err) {
-                console.log(err);
-                done();
-                return fn(err);
-            }
-
-            client.query("INSERT INTO _client (_name, _password) VALUES($1 $2)", [name, password],
-                function(err)
-                {
-                    if(err) {
-                        console.log(err);
-                        done();
-                        return fn(err);
-                    }
-                    done();
-                    return fn(null);
-                }
-            );
-        });
-    }
-}
+var User = require("./users");
 
 function Device(user, key){
     this.user=user;
@@ -88,9 +62,9 @@ function Device(user, key){
         });
     }
 }
- */
 
 module.exports.pg = pg;
 module.exports.conString = conString;
 module.exports.Client = Client;
+module.exports.User = User;
 //module.exports.device = Device;

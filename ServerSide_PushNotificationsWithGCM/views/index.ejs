@@ -1,14 +1,14 @@
 <% include _layouts/top %>
 <script>
 
-    function deleteClient(){
+    function deleteUser(){
 
         var name= document.getElementById('2').value;
 
         var parameters = "user="+name;
 
         var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("DELETE", "/RTPushNotif/clients/test/users", true);
+        xmlhttp.open("DELETE", "/RTPushNotif/api/v1/clients/SIBS/users/Oksana", true);
         xmlhttp.setRequestHeader("xhr", "XMLHttpRequest");
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
@@ -24,35 +24,13 @@
 
     }
 
-    function insertClient(){
-
-        var name= document.getElementById('1').value;
-        var obj = JSON.stringify({user: name, devices: ['123455']});
-
-        var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("POST", "/RTPushNotif/clients/test/users", true);
-        xmlhttp.setRequestHeader("xhr", "XMLHttpRequest");
-        xmlhttp.setRequestHeader("Content-type", "application/json");
-
-        xmlhttp.onreadystatechange=function()
-        {
-            if (xmlhttp.readyState==4 && xmlhttp.status==200)
-            {
-                console.log(xmlhttp.response);
-            }
-        }
-        xmlhttp.send(obj);
-        return false;
-    }
-
-
-    function updateClient(){
+    function updateUser(){
 
         var name= document.getElementById('3').value;
         var obj = JSON.stringify({user: name});
 
         var xmlhttp=new XMLHttpRequest();
-        xmlhttp.open("PUT", "/RTPushNotif/clients/test/users/joana", true);
+        xmlhttp.open("PUT", "/RTPushNotif/api/v1/clients/SIBS/users/Oksana", true);
         xmlhttp.setRequestHeader("xhr", "XMLHttpRequest");
         xmlhttp.setRequestHeader("Content-type", "application/json");
 
@@ -77,24 +55,20 @@
 
     <label>Password</label>
     <input name="password" required="required" type="password"/>
-    <input type="submit" value="Submeter"/>
+    <input type="submit" value="Submit"/>
 </form>
 
-<form action="/RTPushNotif/api/v1/clients/regist" method="post">
+<form action="/RTPushNotif/api/v1/clients/SIBS/users" method="post">
     <h2>Adicionar utilizador a um cliente</h2>
-    <label>Client Name</label>
-    <input required="required" type="text" name="clientName"/>
-
-    <label>Password</label>
+    <label>User's Name</label>
+    <input required="required" type="text" name="user"/>
+    <label>Client Password</label>
     <input name="password" required="required" type="password"/>
-    <input type="submit" value="Submeter"/>
+    <input type="submit" value="Submit"/>
 </form>
 
-
-<input id="1"><button onclick='insertClient()'>inserir cliente</button>
-<input id="2"><button onclick='deleteClient()'>eliminar cliente</button>
-<input id="3"><button onclick='updateClient()'>editar cliente</button>
-
+<input id="2"><button onclick='deleteUser()'>eliminar utilizador</button>
+<input id="3"><button onclick='updateUser()'>editar utilizador</button>
 
 <% include _layouts/bottom %>
 

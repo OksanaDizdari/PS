@@ -1,10 +1,12 @@
-var pg = require('pg');
-var fs = require('fs');
-var conString = fs.readFileSync("config.properties").toString();
+/**
+ * Created by Beatriz and Oksana on 28/03/2015.
+ */
 
-function insertUser(fn,identifier,clientName,devices){
+var db = require("./../../model");
 
-    pg.connect(conString, function(err,client, done) {
+function insertUser(identifier, clientName, devices, fn){
+
+    db.pg.connect(db.conString, function(err,client, done) {
         if(err) {
             console.log(err);
             done();
@@ -45,9 +47,9 @@ function insertUser(fn,identifier,clientName,devices){
     });
 }
 
-function deleteUser(fn,identifier,clientName){
+function deleteUser(identifier,clientName, fn){
 
-    pg.connect(conString, function(err, client, done) {
+    db.pg.connect(db.conString, function(err, client, done) {
 
         if(err) {
             console.log(err);
@@ -83,8 +85,8 @@ function deleteUser(fn,identifier,clientName){
     });
 }
 
-function updateUser(fn,identifier,clientName,newIdentifier,newDevices){
-    pg.connect(conString, function(err, client, done) {
+function updateUser(identifier,clientName,newIdentifier,newDevices, fn){
+    db.pg.connect(db.conString, function(err, client, done) {
 
         if(err) {
             console.log(err);
@@ -124,6 +126,6 @@ function updateUser(fn,identifier,clientName,newIdentifier,newDevices){
 
 }
 
-module.exports.InsertUser=insertUser;
-module.exports.DeleteUser=deleteUser;
-module.exports.UpdateUser=updateUser;
+module.exports.insertUser=insertUser;
+module.exports.deleteUser=deleteUser;
+module.exports.updateUser=updateUser;
