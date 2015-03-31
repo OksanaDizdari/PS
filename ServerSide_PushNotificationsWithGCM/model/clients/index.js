@@ -6,8 +6,6 @@ var db = require("./../../model");
 
 function insertClient (clientName, password, fn,isTest){
 
-    console.log(isTest);
-    console.log(isTest==true? db.conStringTests: db.conString);
     db.pg.connect(isTest==true? db.conStringTests: db.conString, function(err, client, done) {
         if(err) {
             console.log(err);

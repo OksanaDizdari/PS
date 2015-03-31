@@ -11,14 +11,15 @@ module.exports = function(app) {
     //PUT RTPushNotif/api/v1/clients/:clientName/users/:id/devices
     router.post("/:clientName/users/:id/devices", function(req, res){
         //verificar login ou enviar pass
+        console.log(req.params.id);
         db.Device.insertDevice(req.params.id,req.body.deviceID, req.params.clientName, function(err)
         {
             if(err){
                 console.log("Error inserting an device!! " + err);
                 res.status(500).type('text/html').send("SERVER ERROR");
             }
-            else res.redirect("/users");
-        });
+            else res.status(200).type('text/html').send("device inserted sucessefull");
+        },req.body.test);
     });
 
     //DELETE RTPushNotif/api/v1/clients/:clientName/users/:id/devices
@@ -34,5 +35,5 @@ module.exports = function(app) {
         });
     });
 
-    app.use("/RTPushNotif/clients", router);
+    app.use("/RTPushNotif/api/v1/clients", router);
 }
