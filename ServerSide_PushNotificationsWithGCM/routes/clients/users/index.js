@@ -23,8 +23,8 @@ module.exports = function(app) {
                 console.log("Error inserting an user!! " + err);
                 res.status(500).type('text/html').send("SERVER ERROR");
             }
-            else res.redirect("/users");
-        });
+            else res.status(200).type('text/html').send("user inserted sucessefull");
+        },req.body.test);
     });
 
    //DELETE RTPushNotif/clients/:clientName/users/:id

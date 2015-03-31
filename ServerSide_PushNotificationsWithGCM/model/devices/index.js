@@ -4,7 +4,8 @@
 
 var db = require("./../../model");
 
-function insertDevice(user, key, client, fn){
+function insertDevice(user, key, clientName, fn){
+
     db.pg.connect(db.conString, function(err, client, done) {
 
         if(err) {
@@ -13,7 +14,7 @@ function insertDevice(user, key, client, fn){
             return fn(err);
         }
 
-        client.query("INSERT INTO _device (_key, _user, _client) VALUES($1, $2, $3)", [user, key, client],
+        client.query("INSERT INTO _device (_key, _user, _client) VALUES($1, $2, $3)", [user, key, clientName],
             function(err)
             {
                 if(err) {

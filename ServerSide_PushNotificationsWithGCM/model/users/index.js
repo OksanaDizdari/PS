@@ -4,9 +4,9 @@
 
 var db = require("./../../model");
 
-function insertUser(identifier, clientName, devices, fn){
+function insertUser(identifier, clientName, devices, fn,isTest){
 
-    db.pg.connect(db.conString, function(err,client, done) {
+    db.pg.connect(isTest==true?db.conStringTests: db.conString, function(err,client,done) {
         if(err) {
             console.log(err);
             done();
