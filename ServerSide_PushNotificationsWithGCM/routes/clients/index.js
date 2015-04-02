@@ -10,6 +10,11 @@ var router = express.Router();
 module.exports = function(app) {
 
     router.post("/clients/regist", function(req, res){
+
+        if(req.body.clientName == undefined || req.body.password == undefined ){
+           return  res.status(400).type('text/html').send("Miss some info in body request. Client Name and passward required");
+        }
+
         db.Client.insertClient(req.body.clientName, req.body.password, function(err)
         {
             if(err)

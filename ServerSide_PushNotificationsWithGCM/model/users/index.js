@@ -42,28 +42,15 @@ function insertUser(identifier, clientName, devices, fn,isTest){
     });
 }
 
-function deleteUser(identifier,clientName, fn){
+function deleteUser(identifier,clientName, fn,isTest){
 
-    db.pg.connect(db.conString, function(err, client, done) {
+    db.pg.connect(isTest==true?db.conStringTests: db.conString, function(err, client, done) {
 
         if(err) {
             console.log(err);
             done();
             return fn(err);
         }
-
-        client.query("DELETE FROM _device WHERE _user=$1 and _client=$2", [identifier,clientName],
-            function(err)
-            {
-                if(err) {
-                    console.log(err);
-                    done();
-                    return fn(err);
-                }
-                done();
-                return fn(null);
-            }
-        );
 
         client.query("DELETE FROM _user WHERE _identifier=$1 and _client=$2", [identifier,clientName],
             function(err)
@@ -80,15 +67,19 @@ function deleteUser(identifier,clientName, fn){
     });
 }
 
-function updateUser(identifier,clientName,newIdentifier,newDevices, fn){
-    db.pg.connect(db.conString, function(err, client, done) {
+function updateUser(identifier,clientName,newIdentifier,newDevices,fn,isTest){
+    console.log(identifier);
+    console.log(clientName);
+    ;console.log(newIdentifier);
 
+    db.pg.connect(isTest==true? db.conStringTests: db.conString, function(err, client, done) {
         if(err) {
             console.log(err);
             done();
             return fn(err);
         }
         if(clientName != undefined){
+
             client.query("UPDATE _user SET _identifier=$1 WHERE _identifier=$2 and _client=$3", [newIdentifier,identifier,clientName],
                 function(err)
                 {

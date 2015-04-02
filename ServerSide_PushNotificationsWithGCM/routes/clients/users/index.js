@@ -15,7 +15,12 @@ module.exports = function(app) {
 
     //POST RTPushNotif/clients/:clientName/users
     router.post("/:clientName/users", function(req, res){
-     //verificar login ou enviar pass
+
+        if(req.body.userID == undefined || req.body.password == undefined){
+            return  res.status(400).type('text/html').send("Miss some info in body request. User identifier and client's password required");
+        }
+
+          // TODO   verificar login ou enviar pass
 
         db.User.insertUser(req.body.userID, req.params.clientName, req.body.devicesID, function(err)
         {
@@ -30,7 +35,7 @@ module.exports = function(app) {
    //DELETE RTPushNotif/clients/:clientName/users/:id
     router.delete("/:clientName/users/:id", function(req, res){
 
-        //verificar login ou enviar pass
+        // TODO   verificar login ou enviar pass
 
         db.User.deleteUser(req.params.id, req.params.clientName, function(err)
         {
@@ -38,8 +43,8 @@ module.exports = function(app) {
                 console.log("Error deleting an user!! " + err);
                 res.status(500).type('text/html').send("SERVER ERROR");
             }
-            else res.redirect("/users");
-        });
+            else res.status(200).type('text/html').send("user deleted sucessefull");
+        },req.body.test);
     });
 
    // PUT RTPushNotif/clients/:clientName/users/:id
@@ -48,16 +53,16 @@ module.exports = function(app) {
         if(req.body.userID == undefined && req.body.devicesID == undefined)
             return;
 
-            //verificar login ou enviar pass
+             // TODO  verificar login ou enviar pass
 
-            db.User.updateUser(req.params.id, req.params.clientName, req.body.user, req.body.devicesID,
+        db.User.updateUser(req.params.id, req.params.clientName, req.body.userID, req.body.devicesID,
                 function (err) {
                     if (err) {
                         console.log("Error updating an user!! " + err);
                         res.status(500).type('text/html').send("SERVER ERROR");
                     }
-                    else res.redirect("/users");
-                })
+                    else res.status(200).type('text/html').send("user updated sucessefull");
+                },req.body.test)
 
     });
     app.use("/RTPushNotif/api/v1/clients", router);

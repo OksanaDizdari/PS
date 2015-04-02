@@ -15,8 +15,7 @@ CREATE TABLE _user
   _client character varying(120) NOT NULL,
   CONSTRAINT _user_pkey PRIMARY KEY (_identifier,_client),
   CONSTRAINT _client FOREIGN KEY (_client)
-      REFERENCES _client (_name) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
+      REFERENCES _client (_name) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE _device
@@ -26,5 +25,5 @@ CREATE TABLE _device
  _client character varying(120) NOT NULL,
   CONSTRAINT _device_pkey PRIMARY KEY (_key,_user,_client),
   CONSTRAINT _user FOREIGN KEY (_user, _client)
-  REFERENCES _user(_identifier, _client) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION
+  REFERENCES _user(_identifier, _client) ON UPDATE CASCADE ON DELETE CASCADE
 );
