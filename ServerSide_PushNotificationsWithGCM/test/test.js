@@ -132,6 +132,7 @@ describe('Error inserting user. Miss information in request body', function() {
 describe('Insert client,user and associate devices to user', function() {
 
     it('should add sucessefull a client and the status of response should be 200', function(done) {
+        _done=done;
         var params = {
             clientName: 'CLD',
             password: 'test',
@@ -147,10 +148,23 @@ describe('Insert client,user and associate devices to user', function() {
                     throw err;
                 }
                  assert(res.status == 200);
-                 done();
+                 db.pg.connect(db.conStringTests, function(err, client, done) {
+                        client.query("SELECT _name FROM _client where _name='CLD' and _password='test'", function(err,results) {
+                            if(err){
+                                assert(false);
+                                done();
+                                _done();
+                            }
+                                assert(results.rows.length>0);
+                                done();
+                                _done();
+                            }
+                        );
+                });
             });
     });
     it('should add sucessefull a user and the status of response should be 200', function(done) {
+        _done=done;
         var params = {
                     userID: 'user1',
                     password: 'test',
@@ -166,10 +180,24 @@ describe('Insert client,user and associate devices to user', function() {
                             throw err;
                         }
                         assert(res.status == 200);
-                        done();
+
+                        db.pg.connect(db.conStringTests, function(err, client, done) {
+                            client.query("SELECT _identifier FROM _user where _identifier='user1' and _client='CLD'", function(err,results) {
+                                    if(err){
+                                        assert(false);
+                                        done();
+                                        _done();
+                                    }
+                                    assert(results.rows.length>0);
+                                    done();
+                                    _done();
+                                }
+                            );
+                        });
             });
     });
     it('should add sucessefull a device to user and the status of response should be 200', function(done) {
+        _done=done;
         var params = {
             deviceID: '234567654',
             password: 'test',
@@ -185,11 +213,24 @@ describe('Insert client,user and associate devices to user', function() {
                     throw err;
                 }
                 assert(res.status == 200);
-                done();
+                db.pg.connect(db.conStringTests, function(err, client, done) {
+                    client.query("SELECT * FROM _device where _user='user1' and _client='CLD' and _key='234567654'", function(err,results) {
+                            if(err){
+                                assert(false);
+                                done();
+                                _done();
+                            }
+                            assert(results.rows.length>0);
+                            done();
+                            _done();
+                        }
+                    );
+                });
             });
     });
 
     it('should update sucessefull a user and the status of response should be 200', function(done) {
+        _done=done;
         var params = {
             userID: 'user1updated',
             password: 'test',
@@ -206,10 +247,23 @@ describe('Insert client,user and associate devices to user', function() {
                     throw err;
                 }
                 assert(res.status == 200);
-                done();
+                db.pg.connect(db.conStringTests, function(err, client, done) {
+                    client.query("SELECT _identifier FROM _user where _identifier='user1updated' and _client='CLD'", function(err,results) {
+                            if(err){
+                                assert(false);
+                                done();
+                                _done();
+                            }
+                            assert(results.rows.length>0);
+                            done();
+                            _done();
+                        }
+                    );
+                });
             });
     });
     it('should delete sucessefull a user and the status of response should be 200', function(done) {
+       _done=done;
         var params = {
             password: 'test',
             test:true
@@ -225,7 +279,14 @@ describe('Insert client,user and associate devices to user', function() {
                     throw err;
                 }
                 assert(res.status == 200);
-                done();
+                db.pg.connect(db.conStringTests, function(err, client, done) {
+                    client.query("SELECT _identifier FROM _user where _identifier='user1updated' and _client='CLD'", function(err,results) {
+                            assert(results.rows.length==0);
+                            done();
+                            _done();
+                        }
+                    );
+                });
             });
     });
 });
