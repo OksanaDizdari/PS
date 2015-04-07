@@ -178,11 +178,12 @@ proguard/
 # Log Files
 *.log
 
-#OksanaAdded
+#Oksana Added
 .gradle
 /local.properties
 /.idea/libraries
 .DS_Store
 /build
 .idea/
+configTest.properties
 config.properties
